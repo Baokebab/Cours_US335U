@@ -35,7 +35,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 180}
 --- !u!33 &3504929198951487719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -113,6 +113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThrowForce: 400
+  hasTouchedIA: 0
+  airBorne: 1
+  angle: 40
 --- !u!54 &498873538127578621
 Rigidbody:
   m_ObjectHideFlags: 0
