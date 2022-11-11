@@ -70,6 +70,9 @@ public class Player : MonoBehaviour
             animator.SetTrigger("hasThrowed");
             Instantiate(ChalkPrefab, camPov.transform.position, camPov.transform.rotation);
             ControllerManager.leftClick = false;
+
+            //A modif pour mettre au nb d'IA plutôt
+            BoidManager.sharedInstance.boids[Random.Range(0, BoidManager.sharedInstance.boids.Count)].isDead();
         }
     }
 
