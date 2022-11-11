@@ -15,15 +15,15 @@ public class Player : MonoBehaviour
     Animator animator;
     Camera camPov;
 
-    private void Awake()
-    {
-        rb = gameObject.GetComponent<Rigidbody>();
-        animator = gameObject.GetComponent<Animator>();
-        camPov = Camera.main;
-    }
+    [SerializeField] AudioClip[] _audioList;
+    AudioSource _audioSource;
+
     void Start()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        camPov = Camera.main;
     }
 
     void FixedUpdate()
@@ -67,13 +67,20 @@ public class Player : MonoBehaviour
     {
         if(ControllerManager.leftClick)
         {
+            ControllerManager.leftClick = false;
             animator.SetTrigger("hasThrowed");
             Instantiate(ChalkPrefab, camPov.transform.position, camPov.transform.rotation);
-            ControllerManager.leftClick = false;
-
+            if(!_audioSource.isPlaying)
+            {
+                _audioSource.clip = _audioList[Random.Range(0, _audioList.Length)];
+                _audioSource.Play();
+            }
+           
             //A modif pour mettre au nb d'IA plutôt
             BoidManager.sharedInstance.boids[Random.Range(0, BoidManager.sharedInstance.boids.Count)].isDead();
         }
+
+        
     }
 
 

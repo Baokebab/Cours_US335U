@@ -27,6 +27,10 @@ public class Boid : MonoBehaviour
     public float AquaX = 0.4f, AquaY = 0.3f, AquaZ = 1.2f;
     public Transform CenterOfFishTank;
     public GameObject BubbleFX;
+    bool toSurface = false;
+
+    public Material[] materialList;
+    SkinnedMeshRenderer skinMesh;
 
     Animator animator;
 
@@ -36,6 +40,8 @@ public class Boid : MonoBehaviour
         CenterOfFishTank = transform.parent.GetChild(0).transform;
         target = CenterOfFishTank.position + new Vector3(Random.Range(-AquaX, AquaX), Random.Range(-AquaY, AquaY), Random.Range(-AquaZ, AquaZ));
         animator.speed = Random.Range(0.5f, 1f);
+        skinMesh = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        skinMesh.material = materialList[Random.Range(0, materialList.Length)];
     }
     // Update is called once per frame
     void Update()
@@ -101,7 +107,8 @@ public class Boid : MonoBehaviour
             Vector3 vecToTarget = target - transform.position;
             if (vecToTarget.sqrMagnitude < 0.1f)
             {
-                target = CenterOfFishTank.position + new Vector3(Random.Range(-AquaX, AquaX), Random.Range(-AquaY, AquaY), Random.Range(-AquaZ, AquaZ));
+                if (toSurface) target = CenterOfFishTank.position + new Vector3(Random.Range(-AquaX, AquaX), AquaY-0.5f, Random.Range(-AquaZ, AquaZ)); 
+                else target = CenterOfFishTank.position + new Vector3(Random.Range(-AquaX, AquaX), Random.Range(-AquaY, AquaY), Random.Range(-AquaZ, AquaZ));
                 goToTarget = false;
             }
                 
@@ -137,10 +144,14 @@ public class Boid : MonoBehaviour
         //    transform.LookAt(transform.position + velocity);
 
         //Rotation plus smooth que celle ci-dessus
-        Vector3 dirToTarget = (target - transform.position);
-        dirToTarget.y = 0;
-        Quaternion rot = Quaternion.FromToRotation(transform.forward, dirToTarget.normalized);
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot * transform.rotation, 1.0f - Mathf.Pow(Mathf.Clamp01(SmoothingRotation), Time.deltaTime));
+        if(!toSurface)
+        {
+            Vector3 dirToTarget = (target - transform.position);
+            dirToTarget.y = 0;
+            Quaternion rot = Quaternion.FromToRotation(transform.forward, dirToTarget.normalized);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot * transform.rotation, 1.0f - Mathf.Pow(Mathf.Clamp01(SmoothingRotation), Time.deltaTime));
+        }
+        
 
 
         //Debug
@@ -155,7 +166,9 @@ public class Boid : MonoBehaviour
     {
         animator.SetBool("isDead", true);
         BubbleFX.SetActive(false);
-        maxSpeed = minSpeed+0.001f;
+        maxSpeed = minSpeed+0.0001f;
+        toSurface = true;
+        target = CenterOfFishTank.position + new Vector3(Random.Range(-AquaX, AquaX), AquaY - 0.5f, Random.Range(-AquaZ, AquaZ));
     }
 
     void OnDrawGizmosSelected()

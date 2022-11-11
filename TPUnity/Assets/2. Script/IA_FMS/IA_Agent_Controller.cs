@@ -13,16 +13,18 @@ public class IA_Agent_Controller : MonoBehaviour
     [SerializeField] float speedAnimation;
     Animator animator;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-        navAgent = GetComponent<NavMeshAgent>();
-    }
+    [SerializeField] Material[] _materialList;
+    [SerializeField] AudioClip[] _audioHitList ;
+    AudioSource _audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        navAgent = GetComponent<NavMeshAgent>();
         speedAnimation = Random.Range(0.8f, 3f);
         animator.speed = speedAnimation;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,14 @@ public class IA_Agent_Controller : MonoBehaviour
         {
             animator.SetTrigger("isHurt");
             chalkScript.hasTouchedIA = true;
+           
         }        
+    }
+
+    public void HitSFX()
+    {
+        _audioSource.clip = _audioHitList[Random.Range(0, _audioHitList.Length)];
+        _audioSource.Play();
     }
 
     public void CheaterHit()
@@ -68,6 +77,7 @@ public class IA_Agent_Controller : MonoBehaviour
         animator.speed = speedAnimation;
     }
 
+    
     //Draw NavMeshPath
     public void OnDrawGizmos() 
     {
