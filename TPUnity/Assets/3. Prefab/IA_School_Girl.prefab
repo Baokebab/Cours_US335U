@@ -1562,8 +1562,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5946316589497239690}
-  m_LocalRotation: {x: -0, y: -0.9993925, z: -0, w: -0.034851376}
-  m_LocalPosition: {x: -1.9469994, y: 0.059399605, z: 0.6700001}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1571,7 +1571,7 @@ Transform:
   - {fileID: 5947125088063888022}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -183.994, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &6039891755420857500
 Animator:
   serializedVersion: 4
@@ -1647,8 +1647,7 @@ MonoBehaviour:
   SchoolExit: {fileID: 0}
   navAgent: {fileID: 6039891755420857502}
   speedAnimation: 0
-  _materialList: []
-  _audioList:
+  _audioHitList:
   - {fileID: 8300000, guid: 78031589852596046bddad132e36291d, type: 3}
   - {fileID: 8300000, guid: 4b04ec6ef4438114abf25ab05b3da8b7, type: 3}
   - {fileID: 8300000, guid: c3cd8f56915e9ff46a4ad23a8062771b, type: 3}

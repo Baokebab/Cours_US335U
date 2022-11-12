@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class IA_Agent_Controller : MonoBehaviour
 {
 
+    #region Variables
     public bool showDebug = true;
     public bool isCheater = true;
     [SerializeField] Transform SchoolExit;
@@ -13,9 +14,10 @@ public class IA_Agent_Controller : MonoBehaviour
     [SerializeField] float speedAnimation;
     Animator animator;
 
-    [SerializeField] Material[] _materialList;
     [SerializeField] AudioClip[] _audioHitList ;
     AudioSource _audioSource;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +39,6 @@ public class IA_Agent_Controller : MonoBehaviour
         }
     }
 
-
     //En cas de collision avec la craie
     private void OnCollisionEnter(Collision collision)
     {
@@ -48,13 +49,11 @@ public class IA_Agent_Controller : MonoBehaviour
            
         }        
     }
-
     public void HitSFX()
     {
         _audioSource.clip = _audioHitList[Random.Range(0, _audioHitList.Length)];
         _audioSource.Play();
     }
-
     public void CheaterHit()
     {
         if (isCheater)
@@ -76,8 +75,7 @@ public class IA_Agent_Controller : MonoBehaviour
     {
         animator.speed = speedAnimation;
     }
-
-    
+  
     //Draw NavMeshPath
     public void OnDrawGizmos() 
     {

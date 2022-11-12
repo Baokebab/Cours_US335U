@@ -12,9 +12,11 @@ public class Player : MonoBehaviour
     [SerializeField] float playerSpeed = 500;
     [SerializeField] float sensiHorizontale = 8f;
     [SerializeField] float sensiVerticale = 0.5f;
+    float _verticalRotation = 0f;
+    [SerializeField] float _downAngle, _upAngle;
     Animator animator;
     Camera camPov;
-
+    
     [SerializeField] AudioClip[] _audioList;
     AudioSource _audioSource;
 
@@ -29,10 +31,13 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-        Look();
         Fire();
     }
 
+    private void Update()
+    {
+        Look();
+    }
     //Player Movement ZQSD
     void Move()
     {
@@ -55,10 +60,13 @@ public class Player : MonoBehaviour
     void Look()
     {
         Vector2 rotationInput = ControllerManager.rotationInput;
+        
         if (rotationInput != Vector2.zero)
         {
-            transform.Rotate(Vector3.up, rotationInput.x * Time.fixedDeltaTime * sensiHorizontale);
-            camPov.transform.Rotate(Vector3.left, rotationInput.y * Time.fixedDeltaTime * sensiVerticale);
+            transform.Rotate(Vector3.up, rotationInput.x * Time.deltaTime * sensiHorizontale);
+            _verticalRotation -= rotationInput.y * Time.deltaTime * sensiVerticale;
+            _verticalRotation = Mathf.Clamp(_verticalRotation, _upAngle, _downAngle);
+            camPov.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
         }
     }
 
@@ -70,7 +78,7 @@ public class Player : MonoBehaviour
             ControllerManager.leftClick = false;
             animator.SetTrigger("hasThrowed");
             Instantiate(ChalkPrefab, camPov.transform.position, camPov.transform.rotation);
-            if(!_audioSource.isPlaying)
+            if(!_audioSource.isPlaying) //Pour éviter de spammer de couper un son déjà en play
             {
                 _audioSource.clip = _audioList[Random.Range(0, _audioList.Length)];
                 _audioSource.Play();
