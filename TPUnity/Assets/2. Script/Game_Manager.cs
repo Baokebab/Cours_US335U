@@ -22,8 +22,9 @@ public class Game_Manager : MonoBehaviour
     }
 
     #region Variables
-    public static bool _gameIsPaused = false;
-    public static bool _gameHasEnded = false;
+    public static bool GameIsPaused = false;
+    public static bool GameHasEnded = false;
+    public static int PartGame = 0;
 
     [SerializeField] GameObject _pauseMenu;
     [SerializeField] GameObject _endingPanel;
@@ -37,14 +38,14 @@ public class Game_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!_gameIsPaused && ControllerManager.EscapeKey) PauseGame();
-        if (_gameIsPaused && ControllerManager.EscapeKey) ResumeGame();
-        if (IA_Manager.sharedInstance.NbCheater == 0 && !_gameHasEnded) GameEnding();
+        if (!GameIsPaused && ControllerManager.EscapeKey) PauseGame();
+        if (GameIsPaused && ControllerManager.EscapeKey) ResumeGame();
+        if (IA_Manager.sharedInstance.NbCheater == 0 && !GameHasEnded) GameEnding();
 
     }
     void GameEnding()
     {
-        _gameHasEnded = true;
+        GameHasEnded = true;
         _endingPanel.SetActive(true);
     }
     public void StayAfterEnding()
@@ -57,7 +58,7 @@ public class Game_Manager : MonoBehaviour
         ControllerManager.leftClick = false;
         Time.timeScale = 0f;
         AudioListener.pause = true;
-        _gameIsPaused = true;
+        GameIsPaused = true;
         _pauseMenu.SetActive(true);
 
     }
@@ -67,7 +68,7 @@ public class Game_Manager : MonoBehaviour
         ControllerManager.leftClick = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
-        _gameIsPaused = false;
+        GameIsPaused = false;
         _pauseMenu.SetActive(false);
     }
     public void LoadMenu()

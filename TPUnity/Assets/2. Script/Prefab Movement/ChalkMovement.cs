@@ -30,8 +30,8 @@ public class ChalkMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        airBorne = false; //A modifier pour le bounce effect
-        if(collision.gameObject.CompareTag("Floor"))
+        if (!collision.gameObject.CompareTag("Player")) airBorne = false; //A modifier pour le bounce effect
+        if (collision.gameObject.CompareTag("Floor"))
         {
             Destroy(this.gameObject);
         }

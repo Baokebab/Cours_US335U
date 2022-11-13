@@ -19,6 +19,7 @@ public class FSMTester : MonoBehaviour
         _animator = GetComponent<Animator>();
         _IaController = GetComponent<IA_Agent_Controller>();
         _IaNavAgent = GetComponent<NavMeshAgent>();
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
     }
     void Update()
     {

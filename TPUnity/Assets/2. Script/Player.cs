@@ -1,31 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 public class Player : MonoBehaviour
 {
-    Rigidbody rb;
-    Vector3 inputDirection;
-    [SerializeField] GameObject ChalkPrefab;
-    [SerializeField] float playerSpeed = 500;
-    [SerializeField] float sensiHorizontale = 8f;
-    [SerializeField] float sensiVerticale = 0.5f;
+
+    #region Variables
+    Rigidbody _rb;
+    Vector3 _inputDirection;
+    [SerializeField] GameObject _chalkPrefab;
+    [SerializeField] GameObject _paperPrefab;
+    [SerializeField] float _playerSpeed = 50;
+    [SerializeField] float _sensiHorizontale = 25f;
+    [SerializeField] float _sensiVerticale = 0.5f;
     float _verticalRotation = 0f;
     [SerializeField] float _downAngle, _upAngle;
-    Animator animator;
-    Camera camPov;
-    
+    Animator _animator;
+    Camera _camPov;
+
     [SerializeField] AudioClip[] _audioList;
+    [SerializeField] AudioClip _startVoice;
+    int _audioIndex = 0;
     AudioSource _audioSource;
 
+    #endregion
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        camPov = Camera.main;
+        _rb = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        _camPov = Camera.main;
+        _audioList = _audioList.OrderBy(x => System.Guid.NewGuid()).ToArray();
     }
 
     void FixedUpdate()
@@ -44,31 +52,35 @@ public class Player : MonoBehaviour
         Vector2 moveInput = ControllerManager.moveInput;
         if (moveInput != Vector2.zero)
         {
-            inputDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
-            rb.velocity = inputDirection * playerSpeed * Time.fixedDeltaTime;
-            animator.SetBool("isWalking",true);
+            _inputDirection = transform.right * moveInput.x + transform.forward * moveInput.y;
+            _rb.velocity = _inputDirection * _playerSpeed * Time.fixedDeltaTime;
+            _animator.SetBool("isWalking",true);
         }
         else
         {
-            rb.velocity = Vector3.zero;
-            animator.SetBool("isWalking", false);
+            _rb.velocity = Vector3.zero;
+            _animator.SetBool("isWalking", false);
         }
     }
 
-
+    public void YouCanStartVoice()
+    {
+        _audioSource.clip = _startVoice;
+        _audioSource.Play();
+    }
     //Rotation souris/camera
     void Look()
     {
-        if(!Game_Manager._gameIsPaused)
+        if(!Game_Manager.GameIsPaused)
         {
             Vector2 rotationInput = ControllerManager.rotationInput;
 
             if (rotationInput != Vector2.zero)
             {
-                transform.Rotate(Vector3.up, rotationInput.x * Time.deltaTime * sensiHorizontale);
-                _verticalRotation -= rotationInput.y * Time.deltaTime * sensiVerticale;
+                transform.Rotate(Vector3.up, rotationInput.x * Time.deltaTime * _sensiHorizontale);
+                _verticalRotation -= rotationInput.y * Time.deltaTime * _sensiVerticale;
                 _verticalRotation = Mathf.Clamp(_verticalRotation, _upAngle, _downAngle);
-                camPov.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+                _camPov.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
             }
         }
     }
@@ -76,19 +88,28 @@ public class Player : MonoBehaviour
     //Player Left Click
     void Fire()
     {
-        if(ControllerManager.leftClick && !Game_Manager._gameIsPaused)
+        if(ControllerManager.leftClick && !Game_Manager.GameIsPaused)
         {
+            _animator.SetTrigger("hasThrowed");
             ControllerManager.leftClick = false;
-            animator.SetTrigger("hasThrowed");
-            Instantiate(ChalkPrefab, camPov.transform.position, camPov.transform.rotation);
-            //if(!_audioSource.isPlaying) //Pour éviter de spammer de couper un son déjà en play
-            //{
-            //    _audioSource.clip = _audioList[Random.Range(0, _audioList.Length)];
-            //    _audioSource.Play();
-            //}
-           
-            //A modif pour mettre au nb d'IA plutôt
-            BoidManager.sharedInstance.boids[Random.Range(0, BoidManager.sharedInstance.boids.Count)].isDead();
+
+            if (Game_Manager.PartGame == 0)
+            {
+                Instantiate(_paperPrefab, _camPov.transform.position, _camPov.transform.rotation);
+                _audioSource.clip = _audioList[_audioIndex++];
+                _audioSource.Play();
+                if(_audioIndex == _audioList.Length)
+                {
+                    _audioList = _audioList.OrderBy(x => System.Guid.NewGuid()).ToArray();
+                    _audioIndex = 0;
+                }
+            }
+            if (Game_Manager.PartGame == 1)
+            {
+                Instantiate(_chalkPrefab, _camPov.transform.position, _camPov.transform.rotation);
+                //A modif pour une intéraction plus intéressante peut etre
+                BoidManager.sharedInstance.boids[Random.Range(0, BoidManager.sharedInstance.boids.Count)].isDead();
+            }
         }
     }
 

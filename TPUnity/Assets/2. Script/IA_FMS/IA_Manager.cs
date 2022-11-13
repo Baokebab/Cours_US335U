@@ -28,6 +28,9 @@ public class IA_Manager : MonoBehaviour
     [SerializeField] List<IA_Agent_Controller> IaList = new List<IA_Agent_Controller>();
     [SerializeField] Material[] _materialList;
     [SerializeField] Vector3[] _chairPos;
+    [SerializeField] PaperPlaced[] _paperPlacement;
+
+
     IA_Agent_Controller[] _cheaterArray;
     Transform _player;
 
@@ -45,6 +48,7 @@ public class IA_Manager : MonoBehaviour
         {
             IA_Agent_Controller Ia = GameObject.Instantiate<IA_Agent_Controller>(prefabIA);
             Ia.transform.position = _chairPos[i];
+            Ia.MyPaperPlacement = _paperPlacement[i];
             Ia.transform.parent = this.transform;
             Ia.SchoolExit = _exitPos;
             Ia.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = _materialList[UnityEngine.Random.Range(0, _materialList.Length)];

@@ -17,6 +17,7 @@ public class StateCheating : FSMState<StateInfo>
             TempoNotSafe += infos.PeriodUpdate;
             if(TempoNotSafe > PeriodNotSafe)
             {
+                _IaController._mobile.SetActive(false);
                 addAndActivateSubState<StateTranquille>();
             }
         }

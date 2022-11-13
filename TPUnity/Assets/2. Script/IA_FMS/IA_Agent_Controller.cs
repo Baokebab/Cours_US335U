@@ -18,7 +18,13 @@ public class IA_Agent_Controller : MonoBehaviour
     [SerializeField] AudioClip[] _audioHitList ;
     [SerializeField] AudioClip _cheaterLaugh;
     AudioSource _audioSource;
+
+    [SerializeField] PaperMovement _paperPrefab;
+    public PaperMovement MyPaper;
+    public PaperPlaced MyPaperPlacement;
     
+    FSMTester _FSM;
+    public GameObject _mobile;
     #endregion
 
     // Start is called before the first frame update
@@ -29,6 +35,7 @@ public class IA_Agent_Controller : MonoBehaviour
         speedAnimation = Random.Range(0.8f, 3f);
         _animator.speed = speedAnimation;
         _audioSource = GetComponent<AudioSource>();
+        _FSM = GetComponent<FSMTester>();
     }
 
     // Update is called once per frame
@@ -40,9 +47,30 @@ public class IA_Agent_Controller : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (Game_Manager._gameHasEnded)
+        if (Game_Manager.GameHasEnded)
         {
             GoToExit();
+        }
+        if(!_FSM.enabled && PaperPlacement._paperFullyPlaced)
+        {
+            _FSM.enabled = true;
+            if(MyPaperPlacement.myPaper != null) MyPaper = MyPaperPlacement.myPaper;
+            else
+            {
+                MyPaper = Instantiate<PaperMovement>(_paperPrefab);
+                MyPaper.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                MyPaper.transform.position = MyPaperPlacement.transform.position;
+                MyPaper.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+        }
+
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("HidingGrab"))
+        {
+            _mobile.SetActive(true);
+        }
+        else
+        {
+            _mobile.SetActive(false);
         }
     }
     //En cas de collision avec la craie
