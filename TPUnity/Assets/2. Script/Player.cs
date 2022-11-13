@@ -59,36 +59,37 @@ public class Player : MonoBehaviour
     //Rotation souris/camera
     void Look()
     {
-        Vector2 rotationInput = ControllerManager.rotationInput;
-        
-        if (rotationInput != Vector2.zero)
+        if(!Game_Manager._gameIsPaused)
         {
-            transform.Rotate(Vector3.up, rotationInput.x * Time.deltaTime * sensiHorizontale);
-            _verticalRotation -= rotationInput.y * Time.deltaTime * sensiVerticale;
-            _verticalRotation = Mathf.Clamp(_verticalRotation, _upAngle, _downAngle);
-            camPov.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            Vector2 rotationInput = ControllerManager.rotationInput;
+
+            if (rotationInput != Vector2.zero)
+            {
+                transform.Rotate(Vector3.up, rotationInput.x * Time.deltaTime * sensiHorizontale);
+                _verticalRotation -= rotationInput.y * Time.deltaTime * sensiVerticale;
+                _verticalRotation = Mathf.Clamp(_verticalRotation, _upAngle, _downAngle);
+                camPov.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            }
         }
     }
 
     //Player Left Click
     void Fire()
     {
-        if(ControllerManager.leftClick)
+        if(ControllerManager.leftClick && !Game_Manager._gameIsPaused)
         {
             ControllerManager.leftClick = false;
             animator.SetTrigger("hasThrowed");
             Instantiate(ChalkPrefab, camPov.transform.position, camPov.transform.rotation);
-            if(!_audioSource.isPlaying) //Pour éviter de spammer de couper un son déjà en play
-            {
-                _audioSource.clip = _audioList[Random.Range(0, _audioList.Length)];
-                _audioSource.Play();
-            }
+            //if(!_audioSource.isPlaying) //Pour éviter de spammer de couper un son déjà en play
+            //{
+            //    _audioSource.clip = _audioList[Random.Range(0, _audioList.Length)];
+            //    _audioSource.Play();
+            //}
            
             //A modif pour mettre au nb d'IA plutôt
             BoidManager.sharedInstance.boids[Random.Range(0, BoidManager.sharedInstance.boids.Count)].isDead();
         }
-
-        
     }
 
 

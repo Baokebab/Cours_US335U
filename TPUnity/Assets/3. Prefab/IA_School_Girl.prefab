@@ -1548,6 +1548,7 @@ GameObject:
   - component: {fileID: 6039891755420857503}
   - component: {fileID: 6039891755420857488}
   - component: {fileID: 8792899941348243869}
+  - component: {fileID: 8572587068735955778}
   m_Layer: 0
   m_Name: IA_School_Girl
   m_TagString: AI_Student
@@ -1645,7 +1646,7 @@ MonoBehaviour:
   showDebug: 1
   isCheater: 0
   SchoolExit: {fileID: 0}
-  navAgent: {fileID: 6039891755420857502}
+  _navAgent: {fileID: 0}
   speedAnimation: 0
   _audioHitList:
   - {fileID: 8300000, guid: 78031589852596046bddad132e36291d, type: 3}
@@ -1659,6 +1660,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 621378d656918b547935499525d5fcb5, type: 3}
   - {fileID: 8300000, guid: fc285307447c80c46bb55a66311bf695, type: 3}
   - {fileID: 8300000, guid: 2546b65077e100f40a3d6bc95069559f, type: 3}
+  _cheaterLaugh: {fileID: 8300000, guid: ae53a69053e84644e931c7cf99c8dc2e, type: 3}
 --- !u!82 &8792899941348243869
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1680,7 +1682,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0.1
-  MaxDistance: 10
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -1773,6 +1775,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8572587068735955778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946316589497239690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbebf8630f28b74dae78b00d3941ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FSMInfos:
+    PeriodUpdate: 0
+    teacherIsClose: 0
+    distanceClose: 2.5
+    cheatingRemaining: 0
+    writingRemaining: 30
+  ShowDebug: 0
+  _player: {fileID: 0}
 --- !u!1 &5946320971914824534
 GameObject:
   m_ObjectHideFlags: 0

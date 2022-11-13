@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public abstract class FSMState<StateInfo> where StateInfo : FSMStateInfo
 {
     public string Name = "Undefined";
     public bool ShowDebug = false;
     public bool KeepMeAlive = false; //Si on doit me détruire à la fin de ma mise à jour
-    public Animator animator;
+    public Animator _animator;
+    public IA_Agent_Controller _IaController;
+    public NavMeshAgent _IaNavAgent;
 
     public List<FSMState<StateInfo>> SubStates = new List<FSMState<StateInfo>>();
     public FSMState<StateInfo> ActiveSubState = null;
@@ -39,7 +43,9 @@ public abstract class FSMState<StateInfo> where StateInfo : FSMStateInfo
         if (ActiveSubState != null)
         {
             ActiveSubState.ShowDebug = this.ShowDebug;
-            ActiveSubState.animator = this.animator;
+            ActiveSubState._IaController = this._IaController;
+            ActiveSubState._animator = this._animator;
+            ActiveSubState._IaNavAgent = this._IaNavAgent;
             ActiveSubState.Update(ref infos);
             if (!ActiveSubState.KeepMeAlive)
             {

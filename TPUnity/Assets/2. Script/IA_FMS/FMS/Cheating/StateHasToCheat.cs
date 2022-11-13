@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class StateHasToCheat : FSMState<StateInfo>
 {
-
-    public float PeriodIsCheating = 8;
     private float TempoIsCheating = 0;
+    public float PeriodOnPhone = Random.Range(3.0f, 5f);  //Regarde sur son tel pendant 3 à 5s
+    public float PeriodLaughing = 3f; //Rigole pendant 1.5secondes
     private bool Init = true;
 
 
     public override void doState(ref StateInfo infos)
     {
         TempoIsCheating += infos.PeriodUpdate;
-
-        if (TempoIsCheating > PeriodIsCheating || Init)
+        if ((TempoIsCheating > PeriodLaughing && isActiveSubstate<StateLaughing>()) || Init)
         {
-            TempoIsCheating = 0;
             Init = false;
-            if (isActiveSubstate<StateCheating>())
-            {
-                addAndActivateSubState<StateLaughing>(); 
-            }
-            else
-            {
-                addAndActivateSubState<StateCheating>();
-            }
+            TempoIsCheating = 0;
+            addAndActivateSubState<StateCheating>();
             infos.cheatingRemaining--;
             infos.writingRemaining -= 3;
+        }
+        else if (TempoIsCheating > PeriodOnPhone && isActiveSubstate<StateCheating>())
+        {
+            TempoIsCheating = 0;
+            addAndActivateSubState<StateLaughing>();
         }
 
         KeepMeAlive = true; //Sinon on perds la tempo, l'init etc...

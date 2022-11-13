@@ -4,29 +4,30 @@ using UnityEngine;
 
 public class StateTranquille : FSMState<StateInfo>
 {
-    public float PeriodIdle = 5;
-    private float TempoIdle = 0;
+    public float PeriodSitting = Random.Range(2.0f,5f);  //Assis à rien faire entre 3 et 5s
+    public float PeriodWriting = Random.Range(5.0f,10f); //Ecris entre 5 et 10s
+    private float TempoTranquille = 0;
     private bool Init = true;
+
 
     public override void doState(ref StateInfo infos)
     {
-        TempoIdle += infos.PeriodUpdate;
+        TempoTranquille += infos.PeriodUpdate;
 
-        if (TempoIdle > PeriodIdle || Init)
+        if ((TempoTranquille > PeriodSitting && isActiveSubstate<StateIdleSitting>()) || Init) 
         {
-            TempoIdle = 0;
             Init = false;
-            if (isActiveSubstate<StateIdleSitting>())
-            {
-                addAndActivateSubState<StateWriting>();
-                infos.writingRemaining--;
-            }
-            else
-            {
-                addAndActivateSubState<StateIdleSitting>();
-            }
+            TempoTranquille = 0;
+            PeriodSitting = Random.Range(2.0f, 5f);
+            addAndActivateSubState<StateWriting>();
+            infos.writingRemaining--;
         }
-
+        else if (TempoTranquille > PeriodWriting && isActiveSubstate<StateWriting>())
+        {
+            TempoTranquille = 0;
+            PeriodWriting = Random.Range(5.0f, 10f);
+            addAndActivateSubState<StateIdleSitting>();
+        }
         KeepMeAlive = true; //Sinon on perds la tempo, l'init etc...
     }
 }
