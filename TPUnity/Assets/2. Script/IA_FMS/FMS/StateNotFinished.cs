@@ -26,6 +26,7 @@ public class StateNotFinished : FSMState<StateInfo>
             TempoTranquille = 0;
             PeriodNotCheating = Random.Range(6f, 11f);
             addAndActivateSubState<StateCheating>();
+            infos.cheatingBonus = true;
             infos.cheatingRemaining--;
         }
         KeepMeAlive = true; //Sinon on perds la tempo, l'init etc...

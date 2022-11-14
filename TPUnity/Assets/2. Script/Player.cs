@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     #region Variables
     Rigidbody _rb;
     Vector3 _inputDirection;
+    public bool CanPlay = false;
     [SerializeField] GameObject _chalkPrefab;
     [SerializeField] GameObject _paperPrefab;
     [SerializeField] float _playerSpeed = 50;
@@ -38,13 +39,19 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
-        Fire();
+        if(CanPlay)
+        {
+            Move();
+            Fire();
+        }    
     }
 
     private void Update()
     {
-        Look();
+        if(CanPlay)
+        {
+            Look();
+        }     
     }
     //Player Movement ZQSD
     void Move()

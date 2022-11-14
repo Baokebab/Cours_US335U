@@ -53,6 +53,7 @@ public class IA_Manager : MonoBehaviour
             Ia.SchoolExit = _exitPos;
             Ia.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = _materialList[UnityEngine.Random.Range(0, _materialList.Length)];
             Ia.transform.GetComponent<FSMTester>()._player = _player;
+            Ia.transform.GetComponent<FSMTester>().FSMInfos.writingRemaining = UnityEngine.Random.Range(7, 20);
             IaList.Add(Ia);
         }
         _cheaterArray = IaList.OrderBy(x => Guid.NewGuid()).Take(NbCheater).ToArray();
