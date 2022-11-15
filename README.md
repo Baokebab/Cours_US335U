@@ -8,7 +8,7 @@ Projet fait en rendu de TP individuel Unity 3D. Les éléments demandés sont : 
 Télécharger le fichier QuocBao_NGUYEN_TPunity.zip    → Vous y trouverez les 3 documents ci-dessous
 - un readme contenant les instructions du jeu (celui que vous lisez actuellement)
 - un lien vers le  git pour la récupération d'un fichier jouable
-- un lien vers le screencast mp4 du jeu (le lien ci dessus [Trailer du jeu fait pour le TP](https://youtu.be/GZ6z9dZaLls))
+- un fichier .bat pour un lien Microsoft Edge vers le trailer mp4 du jeu (le lien ci dessus [Trailer du jeu fait pour le TP](https://youtu.be/GZ6z9dZaLls)) - inspiré/parodié du trailer WOW : WOTLK
 
 ## Histoire
 
@@ -25,7 +25,7 @@ Vous êtes un professeur japonais (sensei) et vous vous occupez d'une classe. Vo
 
 - Flèches directionnelles ←↑→↓/ ZQSD pour se déplacer
 - Touche TABULATION pour le score actuel du joueur
-- Touche Echap pour mettre en pause, reprendre, recommancer ou quitter la partie
+- Touche Echap pour mettre en pause, reprendre, recommencer, quitter la partie ou régler la sensibilité
 
 ## Déroulement du jeu
 
@@ -63,7 +63,7 @@ Quoc-Bao Nguyen
 - Animation : Animator de Unity, deux layers avec un pour le corps entier et un pour le UpperBody
 - Boids : Aquarium
 - Le nombre de tricheur est fixe par choix, leur sélection est aléatoire
-- Un grand nombre d'améliorations possibles et surtout de l'optimisation et de nettoyage de code mais ce projet reste un TP de 1 semaine en plus de l'assimilation du cours. Je ne reviendrai probablement pas sur ce projet passé le rendu le 15/11/2022
+- Un grand nombre d'améliorations possibles et surtout de l'optimisation et de nettoyage de code mais ce projet reste un TP de 1 semaine en plus de l'assimilation du cours. Je ne reviendrai probablement pas sur ce projet passé le rendu du 15/11/2022
 
 ## Remerciements
 
