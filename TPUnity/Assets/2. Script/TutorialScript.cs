@@ -27,9 +27,9 @@ public class TutorialScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
         _n =_listOfVideo.Length - 1;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -47,7 +47,7 @@ public class TutorialScript : MonoBehaviour
             _descriptionTextUI.text = _listDescriptionTuto[_currentStepTuto];
             
         }
-        else if(_currentStepTuto == _n - 1)
+        else if(_currentStepTuto == _n)
         {
             SkipButton();
         }
@@ -68,11 +68,20 @@ public class TutorialScript : MonoBehaviour
     }
     public void SkipButton()
     {
+        ControllerManager.EveryKeyFalse();
+        Game_Manager.PartGame++;
         _player.CanPlay = true;
         _currentStepTuto = 0;
         _videoPlayer.clip = _listOfVideo[_currentStepTuto];
         _descriptionTextUI.text = _listDescriptionTuto[_currentStepTuto];
         _videoPlayer.gameObject.SetActive(false);
         gameObject.SetActive(false);
+        Cursor.visible = false;
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Game Quit");
+        Application.Quit();
     }
 }

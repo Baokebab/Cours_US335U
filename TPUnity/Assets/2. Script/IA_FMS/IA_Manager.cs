@@ -23,7 +23,8 @@ public class IA_Manager : MonoBehaviour
 
     [SerializeField] IA_Agent_Controller prefabIA;
     [SerializeField] int nbIas = 24;
-    public int NbCheater = 2;
+    [SerializeField] int _setNbCheater = 4;
+    public int NbCheater = 4;
     [SerializeField] Transform _exitPos;
     [SerializeField] List<IA_Agent_Controller> IaList = new List<IA_Agent_Controller>();
     [SerializeField] Material[] _materialList;
@@ -31,7 +32,7 @@ public class IA_Manager : MonoBehaviour
     [SerializeField] PaperPlaced[] _paperPlacement;
 
 
-    IA_Agent_Controller[] _cheaterArray;
+    public IA_Agent_Controller[] CheaterArray;
     Transform _player;
 
     public ReadOnlyCollection<IA_Agent_Controller> roIaList
@@ -39,6 +40,10 @@ public class IA_Manager : MonoBehaviour
         get { return new ReadOnlyCollection<IA_Agent_Controller>(IaList); }
     }
 
+    private void Awake()
+    {
+        NbCheater = _setNbCheater;
+    }
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -47,6 +52,7 @@ public class IA_Manager : MonoBehaviour
         for (int i = 0; i < nbIas; i++)
         {
             IA_Agent_Controller Ia = GameObject.Instantiate<IA_Agent_Controller>(prefabIA);
+            Ia.iA_Manager = this;
             Ia.transform.position = _chairPos[i];
             Ia.MyPaperPlacement = _paperPlacement[i];
             Ia.transform.parent = this.transform;
@@ -56,8 +62,8 @@ public class IA_Manager : MonoBehaviour
             Ia.transform.GetComponent<FSMTester>().FSMInfos.writingRemaining = UnityEngine.Random.Range(7, 20);
             IaList.Add(Ia);
         }
-        _cheaterArray = IaList.OrderBy(x => Guid.NewGuid()).Take(NbCheater).ToArray();
-        foreach(var cheater in _cheaterArray)
+        CheaterArray = IaList.OrderBy(x => Guid.NewGuid()).Take(NbCheater).ToArray();
+        foreach(var cheater in CheaterArray)
         {
             cheater.isCheater = true;
             cheater.GetComponent<FSMTester>().FSMInfos.cheatingRemaining = 6;

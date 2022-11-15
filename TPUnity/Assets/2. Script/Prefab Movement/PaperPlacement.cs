@@ -6,9 +6,17 @@ public class PaperPlacement : MonoBehaviour
 {
 
     [SerializeField] PaperPlaced[] _placementList;
-    public static HashSet<PaperMovement> PaperPlacedSet = new HashSet<PaperMovement>();
+    public static List<PaperMovement> PaperPlacedList = new List<PaperMovement>();
+    public static int[] ListMark = new int[11];
     public static bool _paperFullyPlaced = false;
     [SerializeField] Player _player;
+
+    private void Awake()
+    {
+        PaperPlacedList = new List<PaperMovement>();
+        _paperFullyPlaced = false;
+        ListMark = new int[11];
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +37,7 @@ public class PaperPlacement : MonoBehaviour
         }
         _paperFullyPlaced = true;
         Game_Manager.PartGame++;
-        foreach(PaperMovement paper in PaperPlacedSet)
+        foreach(PaperMovement paper in PaperPlacedList)
         {
             if(paper != null)
             {

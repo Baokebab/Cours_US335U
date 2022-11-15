@@ -108,9 +108,16 @@ public class StateTranquille : FSMState<StateInfo>
         "je vais me foutre en l'air là\n",
         "Aled j'ai oublié mon badge\n",
         "et l'attaque au couteaux en bas de chez moi aussi\n",
-        "99%vodka 1%redbull\n",
+        "99% vodka - 1% redbull\n",
         "et là en fait ils ont buté qqun\n",
-
+        "je fais mon coming out\n",
+        "Il s'est pas lavé depuis combien d'années ?\n",
+        "oui singe\n",
+        "le rage quitte est total\n",
+        "Je vais faire un génocide\n",
+        "oui j'aime le chômage\n",
+        "la moine nagui t'as protégé du feur\n",
+        "le prof regarde sous ma jupe, j'ai peur..\n",
 
     };
     public override void doState(ref StateInfo infos)
@@ -146,12 +153,12 @@ public class StateTranquille : FSMState<StateInfo>
         {
             _textToWrite = _textToWrite.OrderBy(x => Guid.NewGuid()).ToArray();
         }
-        if(space >= 0) //Si on a encore de la place pour écrire
+        if((space >= 0 && _textToWrite[_spaceToWrite].Length < 34) || space >= 1) //Si on a encore de la place pour écrire
         {
             var canvas = _IaController.MyPaper.transform.GetChild(0).gameObject;
             canvas.SetActive(true);
             canvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += _textToWrite[_spaceToWrite];
-            if (_textToWrite[_spaceToWrite].Length > 37) _spaceToWrite--;
+            if (_textToWrite[_spaceToWrite].Length > 33) _spaceToWrite--;
             _spaceToWrite--;
         }
      }

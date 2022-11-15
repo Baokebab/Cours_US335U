@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - AI_Student
   - PaperPlacement
+  - StepMark
   layers:
   - Default
   - TransparentFX

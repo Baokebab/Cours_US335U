@@ -7,7 +7,16 @@ using UnityEngine.InputSystem;
 public class ControllerManager : MonoBehaviour
 {
     public static Vector2 moveInput, rotationInput;
-    public static bool leftClick = false, EscapeKey = false;
+    public static bool leftClick = false, EscapeKey = false, TabKey = false;
+
+    private void Awake()
+    {
+        leftClick = false;
+        EscapeKey = false;
+        moveInput = Vector2.zero;
+        TabKey = false;
+        rotationInput = Vector2.zero;
+    }
     void Start()
     {
         
@@ -31,5 +40,18 @@ public class ControllerManager : MonoBehaviour
     {
         EscapeKey = true;
     }
+
+    public static void EveryKeyFalse()
+    {
+        leftClick = false;
+        EscapeKey = false;
+        TabKey = false;
+    }
+
+    public void OnTab()
+    {
+        TabKey = true;
+    }
+
 
 }

@@ -6,22 +6,26 @@ using UnityEngine;
 //Script pour faire des tests spécifiques
 public class TestScript : MonoBehaviour
 {
-    public float radius;
+    public float timer;
+    [SerializeField] Material[] _listmaterial;
+    [SerializeField] SkinnedMeshRenderer skin;
+    int i = 0;
     // Start is called before the first frame update
     void Start()
     {
-        
+        skin = transform.GetChild(6).GetComponent<SkinnedMeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        timer -= Time.deltaTime;
+        if(timer <= 0)
+        {
+            timer = 2;
+            skin.material = _listmaterial[i++];
+        }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = new Color(0, 0, 1, 1.0f);
-        Gizmos.DrawCube(transform.position, new Vector3( 0.8f, 0.6f , 2.4f));
-    }
+
 }

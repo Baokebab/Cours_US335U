@@ -25,6 +25,7 @@ public class IA_Agent_Controller : MonoBehaviour
     
     FSMTester _FSM;
     public GameObject _mobile;
+    public IA_Manager iA_Manager;
     #endregion
 
     // Start is called before the first frame update
@@ -47,7 +48,7 @@ public class IA_Agent_Controller : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (Game_Manager.GameHasEnded)
+        if (Game_Manager.PartOneHasEnded)
         {
             GoToExit();
         }
@@ -98,9 +99,13 @@ public class IA_Agent_Controller : MonoBehaviour
             _animator.SetBool("isWalking", true);
             if (!_cheaterRevealed)
             {
-                IA_Manager.sharedInstance.NbCheater--;
+                iA_Manager.NbCheater--;
                 _cheaterRevealed = true;
             }
+        }
+        else
+        {
+            Player.Health--;
         }
     }
     public void GoToExit()
@@ -117,6 +122,7 @@ public class IA_Agent_Controller : MonoBehaviour
     }
     public void RestoreAnimatorSpeed()
     {
+        if (Game_Manager.PartGame <= 0) return;
         _animator.speed = 1f;
     }
     public void SetAnimatorSpeed()
