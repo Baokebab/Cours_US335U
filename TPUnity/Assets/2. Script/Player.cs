@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -15,8 +16,12 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject _chalkPrefab;
     [SerializeField] GameObject _paperPrefab;
     [SerializeField] float _playerSpeed = 50;
-    [SerializeField] float _sensiHorizontale = 25f;
-    [SerializeField] float _sensiVerticale = 0.5f;
+    public static float _baseSensiHorizontale = 25f;
+    public static float _sensiHorizontale = 25f;
+    public static float _sensiVerticale = 10f;
+    public static float _basesensiVerticale = 10f;
+    [SerializeField] Slider _sliderSensiVert;
+    [SerializeField] Slider _sliderSensiHori;
     float _verticalRotation = 0f;
     [SerializeField] float _downAngle, _upAngle;
     Animator _animator;
@@ -56,7 +61,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(CanPlay)
+        _sensiVerticale = _basesensiVerticale * _sliderSensiVert.value;
+        _sensiHorizontale = _baseSensiHorizontale * _sliderSensiHori.value;
+        if (CanPlay)
         {
             Look();
         }     
