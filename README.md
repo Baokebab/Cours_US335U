@@ -8,7 +8,7 @@ Projet fait en rendu de TP individuel Unity 3D. Les éléments demandés sont : 
 Télécharger le fichier QuocBao_NGUYEN_TPunity.zip    → Vous y trouverez les 3 documents ci-dessous
 - un readme contenant les instructions du jeu (celui que vous lisez actuellement)
 - un lien vers le  git pour la récupération d'un fichier jouable
-- un screencast mp4 du jeu (la vidéo est la même que le lien du trailer ci-dessus)
+- un lien vers le screencast mp4 du jeu (le lien ci dessus [Trailer du jeu fait pour le TP](https://youtu.be/GZ6z9dZaLls))
 
 ## Histoire
 
