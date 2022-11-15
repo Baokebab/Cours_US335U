@@ -12,7 +12,7 @@ Télécharger le fichier QuocBao_NGUYEN_TPunity.zip    → Vous y trouverez les 
 
 ## Histoire
 
-Vous êtes un professeur japonais (sensei) et vous vous occupez d'une classe. Vous allez veillez au bon déroulement d'un examen de la distribution des feuilles à la notation des élèves.
+Vous êtes un professeur japonais (sensei) et vous vous occupez d'une classe. Vous allez veillé au bon déroulement d'un examen de la distribution des feuilles à la notation des élèves.
 
 ## Contrôles
 
