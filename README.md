@@ -38,7 +38,7 @@ Après lancement du jeu, le tutoriel vidéo s'affiche avec les boutons suivants 
 
 ### Partie
 
-- Phase 1 : Distributions des sujets. Chaque élève doit posséder un sujet sur sa table, envoyer les sujets par clique gauche.
+- Phase 1 : Distribution des sujets. Chaque élève doit posséder un sujet sur sa table, envoyer les sujets par clique gauche.
 - Phase 2 : Surveiller les élèves et les empêcher de tricher. Toucher un tricheur avec une craie le fait sortir de la salle, toucher un innocent avec une craie vous fait perdre de la vie. Le joueur possède 2 points de vie initialement
 - Phase 3 : Notation escalier. Selon les réponses de l'élèves sur ce sujet de philosophie, les noter en envoyant sa feuille sur la marche voulue.
 
